@@ -1,0 +1,6 @@
+This is a test file
+It contains some words
+We will search for specific words
+Hello im elias
+I'm from France
+and in french we say Hello like this : Bonjour!
