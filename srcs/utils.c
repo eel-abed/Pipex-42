@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/17 17:33:01 by eel-abed          #+#    #+#             */
-/*   Updated: 2024/07/17 21:01:05 by eel-abed         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:12:51 by eel-abed         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 void	ft_putstr_fd(char *s, int fd)
 {
 	if (s == NULL)
-		return;
-
+	{
+		return ;
+	}
 	while (*s)
 	{
 		write(fd, s, 1);
@@ -24,11 +25,13 @@ void	ft_putstr_fd(char *s, int fd)
 	}
 }
 
-static int count_words(char const *s, char c)
+static	int	count_words(char const *s, char c)
 {
-	int count = 0;
-	int in_word = 0;
+	int	count;
+	int	in_word;
 
+	count = 0;
+	in_word = 0;
 	while (*s)
 	{
 		if (*s != c && in_word == 0)
@@ -43,10 +46,10 @@ static int count_words(char const *s, char c)
 	return (count);
 }
 
-static char *word_dup(const char *str, int start, int finish)
+static	char	*word_dup(const char *str, int start, int finish)
 {
-	char *word;
-	int i;
+	char	*word;
+	int		i;
 
 	i = 0;
 	word = malloc((finish - start + 1) * sizeof(char));
@@ -56,14 +59,18 @@ static char *word_dup(const char *str, int start, int finish)
 	return (word);
 }
 
-char **ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
-	size_t i = 0;
-	size_t j = 0;
-	int index = -1;
-	char **split;
+	size_t	i;
+	size_t	j;
+	int		index;
+	char	**split;
 
-	if (!s || !(split = malloc((count_words(s, c) + 1) * sizeof(char *))))
+	i = 0;
+	j = 0;
+	index = -1;
+	split = malloc((count_words(s, c) + 1) * sizeof(char *));
+	if (!s || !split)
 		return (0);
 	while (i <= ft_strlen(s))
 	{
@@ -78,58 +85,4 @@ char **ft_split(char const *s, char c)
 	}
 	split[j] = 0;
 	return (split);
-}
-
-char *find_command(char *cmd, char **env)
-{
-	char *path = NULL;
-	char *dir;
-	char *bin;
-	char **paths;
-	int i = 0;
-
-	// Chercher la variable PATH dans env
-	while (env[i])
-	{
-		if (ft_strncmp(env[i], "PATH=", 5) == 0)
-		{
-			path = env[i] + 5; // Sauter "PATH="
-			break;
-		}
-		i++;
-	}
-
-	if (!path)
-		return (NULL);
-
-	paths = ft_split(path, ':');
-	i = 0;
-	while (paths[i])
-	{
-		dir = ft_strjoin(paths[i], "/");
-		bin = ft_strjoin(dir, cmd);
-		free(dir);
-		if (access(bin, F_OK) == 0)
-		{
-			// Free paths before returning
-			while (paths[i])
-				free(paths[i++]);
-			free(paths);
-			return (bin);
-		}
-		free(bin);
-		i++;
-	}
-	// Free paths if command not found
-	i = 0;
-	while (paths[i])
-		free(paths[i++]);
-	free(paths);
-	return (NULL);
-}
-
-int error_handler(char *message)
-{
-	perror(message);
-	return (1);
 }

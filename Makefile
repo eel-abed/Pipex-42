@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: eel-abed <eel-abed@student.42quebec.com    +#+  +:+       +#+         #
+#    By: eel-abed <eel-abed@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/11 17:43:54 by eel-abed          #+#    #+#              #
-#    Updated: 2024/07/17 21:11:37 by eel-abed         ###   ########.fr        #
+#    Updated: 2024/08/08 15:13:42 by eel-abed         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = pipex
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = srcs/utils.c srcs/pipex.c srcs/execute.c srcs/ft_strjoin.c srcs/ft_strlen.c srcs/ft_strncmp.c
+SRCS = srcs/utils.c srcs/pipex.c srcs/execute.c srcs/ft_strjoin.c srcs/ft_strlen.c srcs/ft_strncmp.c srcs/error_handler.c srcs/find_command.c
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
